@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tictactoe/screens/create_room_screen.dart';
+import 'package:tictactoe/screens/join_room_screen.dart';
+import 'package:tictactoe/screens/main_menu_screen.dart';
+import 'package:tictactoe/utils/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,24 +16,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Hemlo"),
-        ),
-        body: Text("Hi"),
-      ),
+      routes: {
+        MainMenuScreen.routeName: (context) => const MainMenuScreen(),
+        CreateRoomScreen.routeName: (context) => const CreateRoomScreen(),
+        JoinRoomScreen.routeName: (context) => const JoinRoomScreen(),
+      },
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: bgColor),
+      initialRoute: MainMenuScreen.routeName,
     );
   }
 }
