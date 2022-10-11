@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tictactoe/provider/room_data_provider.dart';
 import 'package:tictactoe/resources/socket_methods.dart';
-import 'package:tictactoe/widgets/waiting_lobby.dart';
+import 'package:tictactoe/views/waiting_lobby.dart';
 
 class GameScreen extends StatefulWidget {
   static String routeName = '/game';
@@ -14,7 +14,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   final SocketMethods _socketMethods = SocketMethods();
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -24,13 +24,20 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget build(BuildContext context) {
-  RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
+    RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);
 
     Provider.of<RoomDataProvider>(context).roomData;
     return Container(
-      child: roomDataProvider.roomData['isJoin'] ? WaitingLobby()  : Center(
-        child: Text("Welcome to the game "),
-      ),
+      child: roomDataProvider.roomData['isJoin']
+          ? WaitingLobby()
+          : SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                ],
+              ),
+            ),
     );
   }
 }
