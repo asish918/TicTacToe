@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tictactoe/provider/room_data_provider.dart';
 import 'package:tictactoe/resources/socket_methods.dart';
+import 'package:tictactoe/views/gameboard_ui.dart';
+import 'package:tictactoe/views/scoreboard.dart';
 import 'package:tictactoe/views/waiting_lobby.dart';
 
 class GameScreen extends StatefulWidget {
@@ -34,7 +36,8 @@ class _GameScreenState extends State<GameScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
+                  Scoreboard(),
+                  GameBoard(),
                 ],
               ),
             ),
