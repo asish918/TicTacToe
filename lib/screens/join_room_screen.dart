@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tictactoe/resources/socket_methods.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
@@ -15,6 +16,16 @@ class JoinRoomScreen extends StatefulWidget {
 class _JoinRoomScreenState extends State<JoinRoomScreen> {
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController gameIDController = TextEditingController();
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _socketMethods.joinRoomSuccessListener(context);
+    _socketMethods.errorOccuredListener(context);
+    _socketMethods.updatePlayersStateListener(context);
+  }
 
   @override
   void dispose() {
@@ -23,7 +34,6 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
     textEditingController.dispose();
     gameIDController.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +49,22 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
                 shadows: [Shadow(blurRadius: 40, color: Colors.blue)],
                 text: "Join Room",
                 fontSize: 70),
-            SizedBox(height: size.height*0.08,),
-            CustomTextField(controller: textEditingController, text: "Enter your nickname"),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: size.height * 0.08,
+            ),
+            CustomTextField(
+                controller: textEditingController, text: "Enter your nickname"),
+            SizedBox(
+              height: 20,
+            ),
             CustomTextField(controller: gameIDController, text: "Enter GameID"),
-            SizedBox(height: size.height*0.045,),
-            CustomButton(onTap: (){}, text: "Join")
+            SizedBox(
+              height: size.height * 0.045,
+            ),
+            CustomButton(
+                onTap: () => _socketMethods.joinRoom(
+                    textEditingController.text, gameIDController.text),
+                text: "Join")
           ],
         ),
       ),
