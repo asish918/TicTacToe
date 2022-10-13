@@ -31,35 +31,38 @@ class _GameBoardState extends State<GameBoard> {
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: size.height),
-      child: GridView.builder(
-        itemCount: 9,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () => tapped(index, roomDataProvider),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white24),
+      child: AbsorbPointer(
+        absorbing: roomDataProvider.roomData['turn']['socketID'] != _socketMethods.socketClient.id,
+        child: GridView.builder(
+          itemCount: 9,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () => tapped(index, roomDataProvider),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white24),
+                ),
+                child: Center(
+                    child: Text(
+                  roomDataProvider.displayElements[index],
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 100,
+                      shadows: [
+                         Shadow(
+                          blurRadius: 40,
+                          color: roomDataProvider.displayElements[index] == 'O' ? Colors.red : Colors.blue,
+                        )
+                      ]),
+                )),
               ),
-              child: Center(
-                  child: Text(
-                roomDataProvider.displayElements[index],
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 100,
-                    shadows: [
-                       Shadow(
-                        blurRadius: 40,
-                        color: roomDataProvider.displayElements[index] == 'O' ? Colors.red : Colors.blue,
-                      )
-                    ]),
-              )),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
