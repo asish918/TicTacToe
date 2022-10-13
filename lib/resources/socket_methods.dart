@@ -9,7 +9,7 @@ class SocketMethods {
   final _socketClient = SocketClient.instance.socket!;
 
   void createRoom(String nickname) {
-    if(nickname.isNotEmpty) {
+    if (nickname.isNotEmpty) {
       _socketClient.emit('createRoom', {
         'nickname': nickname,
       });
@@ -17,26 +17,32 @@ class SocketMethods {
   }
 
   void joinRoom(String nickname, String roomID) {
-    if(nickname.isNotEmpty && roomID.isNotEmpty){
-      _socketClient.emit("joinRoom", {
-        'nickname': nickname,
-        'roomID': roomID
+    if (nickname.isNotEmpty && roomID.isNotEmpty) {
+      _socketClient.emit("joinRoom", {'nickname': nickname, 'roomID': roomID});
+    }
+  }
+
+  void tapGrid(int index, String roomId, List<String> displayElements) {
+    if (displayElements[index] == '') {
+      _socketClient.emit('tap', {
+        'index': index,
+        'roomId': roomId,
       });
     }
   }
 
-
-
   void createRoomSuccessListener(BuildContext context) {
     _socketClient.on("createRoomSuccess", (room) {
-      Provider.of<RoomDataProvider>(context, listen: false).updateRoomData(room);
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(room);
       Navigator.pushNamed(context, GameScreen.routeName);
     });
   }
 
   void joinRoomSuccessListener(BuildContext context) {
     _socketClient.on('joinRoomSuccess', (room) {
-      Provider.of<RoomDataProvider>(context, listen: false).updateRoomData(room);
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(room);
       Navigator.pushNamed(context, GameScreen.routeName);
     });
   }
@@ -47,17 +53,30 @@ class SocketMethods {
     });
   }
 
-
   void updatePlayersStateListener(BuildContext context) {
     _socketClient.on('updatePlayer', (playerData) {
-      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer1(playerData[0],);
-      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer2(playerData[1],);
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer1(
+        playerData[0],
+      );
+      Provider.of<RoomDataProvider>(context, listen: false).updatePlayer2(
+        playerData[1],
+      );
     });
   }
 
   void updateRoomListener(BuildContext context) {
     _socketClient.on('updateRoom', (data) {
-      Provider.of<RoomDataProvider>(context, listen: false).updateRoomData(data);
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(data);
+    });
+  }
+
+  void tappedListener(BuildContext context) {
+    _socketClient.on('tapped', (data) {
+      RoomDataProvider roomDataProvider =
+          Provider.of<RoomDataProvider>(context, listen: false);
+      roomDataProvider.updateDisplayElements(data['index'], data['choice']);
+      roomDataProvider.updateRoomData(data['room']);
     });
   }
 }
