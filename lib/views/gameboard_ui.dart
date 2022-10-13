@@ -46,19 +46,22 @@ class _GameBoardState extends State<GameBoard> {
                   border: Border.all(color: Colors.white24),
                 ),
                 child: Center(
-                    child: Text(
-                  roomDataProvider.displayElements[index],
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 100,
-                      shadows: [
-                         Shadow(
-                          blurRadius: 40,
-                          color: roomDataProvider.displayElements[index] == 'O' ? Colors.red : Colors.blue,
-                        )
-                      ]),
-                )),
+                    child: AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      child: Text(
+                                      roomDataProvider.displayElements[index],
+                                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 100,
+                        shadows: [
+                           Shadow(
+                            blurRadius: 40,
+                            color: roomDataProvider.displayElements[index] == 'O' ? Colors.red : Colors.blue,
+                          )
+                        ]),
+                                    ),
+                    )),
               ),
             );
           },

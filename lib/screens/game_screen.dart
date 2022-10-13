@@ -38,6 +38,7 @@ class _GameScreenState extends State<GameScreen> {
                 children: [
                   Scoreboard(),
                   GameBoard(),
+                  Text('${roomDataProvider.roomData['turn']['nickname']}\'s turn')
                 ],
               ),
             ),
