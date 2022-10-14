@@ -48,4 +48,8 @@ class RoomDataProvider extends ChangeNotifier {
     _filledBoxes+=1;
     notifyListeners();
   }
+
+  void setFilledBoxesTo0() {
+    _filledBoxes = 0;
+  }
 }

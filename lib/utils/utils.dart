@@ -19,6 +19,7 @@ void showGameDialog(BuildContext context, String text) {
           actions: [
             TextButton(
               onPressed: () {
+                GameMethods().clearBoard(context);
                 Navigator.of(context).pop();
               },
               child: const Text(
